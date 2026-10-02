@@ -10,7 +10,24 @@
 <section id="perfil" class="view"><div class="hero"><h1>👤 Perfil</h1><p>Nome, preferências, memória e permissões.</p></div><div class="card"><h3>Minha conta</h3><p class="muted">Login e memória serão adicionados nas próximas etapas.</p></div></section>
 </main><nav class="bottom"><button class="active" onclick="show('chat',this)"><span>💬</span>Chat</button><button onclick="show('financas',this)"><span>💰</span>Finanças</button><button onclick="show('agenda',this)"><span>📅</span>Agenda</button><button onclick="show('tarefas',this)"><span>✓</span>Tarefas</button><button onclick="show('saude',this)"><span>❤️</span>Saúde</button><button onclick="show('projetos',this)"><span>📚</span>Projetos</button><button onclick="show('perfil',this)"><span>👤</span>Perfil</button></nav>
 <script>
-let history=[];const tasks=['Estudar Direito Empresarial','Organizar projeto CHULA','Responder mensagem da faculdade'];let events=[];
+let history=[];let history=[];
+
+function add(type, text) {
+  const chat = document.getElementById('chat');
+  if (!chat) {
+    console.error('Elemento do chat não encontrado.');
+    return;
+  }
+
+  const message = document.createElement('div');
+  message.className = type === 'me' ? 'message me' : 'message bot';
+  message.textContent = text;
+  chat.appendChild(message);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+const tasks=['Estudar Direito Empresarial','Organizar projeto CHULA','Responder mensagem da faculdade'];
+  const tasks=['Estudar Direito Empresarial','Organizar projeto CHULA','Responder mensagem da faculdade'];let events=[];
 function show(id,b){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));b?.classList.add('active')}
 function render(){document.getElementById('date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});document.getElementById('tasks').innerHTML=tasks.map((x,i)=>`<div class="item row"><div><b>${x}</b><small>pendente</small></div><button class="pill" onclick="this.textContent='concluída';this.style.background='#12351f';this.style.color='#6df0aa'">Concluir</button></div>`).join('');document.getElementById('events').innerHTML=events.length?events.map(e=>`<div class="item"><b>${e.title}</b><small>${e.date} • ${e.time}</small></div>`).join(''):'<div class="item muted">Nenhum compromisso cadastrado.</div>'}
 function newTask(){let x=prompt('Qual tarefa precisa ser feita?');if(x){tasks.push(x);render();show('tarefas',document.querySelectorAll('.bottom button')[3])}}
